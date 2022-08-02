@@ -32,5 +32,8 @@ public class Ball : MonoBehaviour, IInteractable
         rb.isKinematic = false;
         transform.parent = null;
         collider.enabled = true;
+
+        rb.AddForceAtPosition(playerInteractScript.gameObject.transform.forward * 1000f, transform.position,
+            ForceMode.Force);
     }
 }
