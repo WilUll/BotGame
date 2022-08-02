@@ -9,8 +9,9 @@ public class CameraLook : MonoBehaviour
     public InputManager InputManager;
 
     public float sensitivity;
+    public bool InvertY;
     
-    private Camera cam;
+    public GameObject CameraHolder;
 
     private float multiplier = 0.01f;
     
@@ -23,7 +24,6 @@ public class CameraLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponentInChildren<Camera>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -34,15 +34,18 @@ public class CameraLook : MonoBehaviour
     {
         RotationInput();
 
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        CameraHolder.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         transform.rotation = Quaternion.Euler(0,yRotation,0);
     }
 
     private void RotationInput()
     {
-        xRotation += InputManager.LookInput.x * sensitivity * multiplier;
-        yRotation -= InputManager.LookInput.y * sensitivity * multiplier;
-
+        yRotation += InputManager.LookInput.x * sensitivity * multiplier;
+        
+        float lookInputX = InvertY ? -InputManager.LookInput.y : InputManager.LookInput.y;
+        
+        xRotation -= lookInputX * sensitivity * multiplier;
+        
         xRotation = Mathf.Clamp(xRotation, minClamp, maxClamp);
     }
 }
