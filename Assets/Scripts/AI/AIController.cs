@@ -11,6 +11,13 @@ public class AIController : MonoBehaviour, IInteractable
     public GameObject[] waypoints;
 
     private int waypointInt;
+
+    [Header("Needs")]
+    public float Food;
+    public float Pats;
+    public float Play;
+    public float Sleep;
+    
     // Start is called before the first frame update
     void Start()
     {
