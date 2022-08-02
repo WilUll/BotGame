@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCharacter(Vector3 direction)
     {
-        Debug.Log(movement + " " + direction);
         Vector3 inputDir = new Vector3(direction.x, 0f, direction.z);
 
         inputDir = transform.right * direction.x + transform.forward * direction.z;

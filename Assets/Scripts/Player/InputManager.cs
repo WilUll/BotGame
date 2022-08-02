@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 
     public Vector2 MoveInput { get; private set; } = Vector2.zero;
     public Vector2 LookInput { get; private set; } = Vector2.zero;
+    
+    public bool FireIsPressed { get; private set; } = false;
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -18,8 +20,16 @@ public class InputManager : MonoBehaviour
         
         playerInput.Player.Look.performed += SetLook;
         playerInput.Player.Look.canceled += SetLook;
+
+        playerInput.Player.Fire.performed += SetFire;
+        playerInput.Player.Fire.canceled += SetFire;
     }
-    
+
+    private void SetFire(InputAction.CallbackContext context)
+    {
+        FireIsPressed = context.performed;
+    }
+
     private void SetMove(InputAction.CallbackContext context)
     {
         MoveInput = context.ReadValue<Vector2>();
