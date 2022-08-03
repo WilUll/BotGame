@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +9,7 @@ public class PongBall : MonoBehaviour
 {
     private Rigidbody2D rb2d;
 
-    [Range(-25f,25f)] private float speed;
+    [Range(-25f,25f)] public float speed;
     private float xOffset = 0f; 
     private float acceleration = 0.05f;
 
@@ -34,7 +35,8 @@ public class PongBall : MonoBehaviour
     private void FixedUpdate()
     {
         speed += acceleration;
-        
+
+        Mathf.Clamp(speed, -350f, 350f);
         rb2d.velocity = new Vector2(xOffset, speed);
     }
 
