@@ -36,7 +36,7 @@ public class PongBall : MonoBehaviour
     {
         speed += acceleration;
 
-        Mathf.Clamp(speed, -350f, 350f);
+        speed = Mathf.Clamp(speed, -350f, 350f);
         rb2d.velocity = new Vector2(xOffset, speed);
     }
 
