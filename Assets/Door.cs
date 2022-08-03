@@ -22,7 +22,6 @@ public class Door : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        Debug.Log(transform.rotation.eulerAngles);
     }
 
     public void Interact(PlayerInteract playerInteract)
