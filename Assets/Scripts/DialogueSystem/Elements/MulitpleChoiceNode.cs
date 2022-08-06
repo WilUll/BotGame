@@ -24,6 +24,8 @@ public class MulitpleChoiceNode : DialogueNode
             text = "Add Choice"
         };
         
+        addChoicesButton.AddToClassList("ds-node__button");
+        
         mainContainer.Insert(1,addChoicesButton);
         
         //Output Field
@@ -38,10 +40,17 @@ public class MulitpleChoiceNode : DialogueNode
             {
                 text = "X"
             };
+            
+            deleteChoiceButton.AddToClassList("ds-node__button");
+
             TextField choiceTextField = new TextField()
             {
                 value = choice
             };
+            
+            choiceTextField.AddToClassList("ds-node__textfield");
+            choiceTextField.AddToClassList("ds-node__choice-textfield");
+            choiceTextField.AddToClassList("ds-node__textfield__hidden");
             
             choicePort.Add(choiceTextField);
             choicePort.Add(deleteChoiceButton);

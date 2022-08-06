@@ -18,6 +18,9 @@ public class DialogueNode : Node
         Text = "Dialogue Text.";
         
         SetPosition(new Rect(position,Vector2.zero));
+        
+        mainContainer.AddToClassList("ds-node__main-container");
+        extensionContainer.AddToClassList("ds-node__extension-container");
     }
 
     public virtual void Draw()
@@ -27,6 +30,12 @@ public class DialogueNode : Node
         {
             value = DialogueName,
         };
+        
+        dialogueNameTextField.AddToClassList("ds-node__textfield");
+        dialogueNameTextField.AddToClassList("ds-node__filename-textfield");
+        dialogueNameTextField.AddToClassList("ds-node__textfield__hidden");
+
+        
         titleContainer.Insert(0, dialogueNameTextField);
 
         //InputPort Field
@@ -36,6 +45,8 @@ public class DialogueNode : Node
         
         //DialogueText Field
         VisualElement customDataContainer = new VisualElement();
+        
+        customDataContainer.AddToClassList("ds-node__custom-data-container");
         Foldout textFoldout = new Foldout()
         {
             text = "Dialogue Text"
@@ -45,6 +56,10 @@ public class DialogueNode : Node
         {
             value = Text
         };
+        
+        textTextField.AddToClassList("ds-node__textfield");
+        textTextField.AddToClassList("ds-node__quote-textfield");
+
         textFoldout.Add(textTextField);
         
         customDataContainer.Add(textFoldout);

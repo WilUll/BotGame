@@ -74,5 +74,7 @@ public class DialogueGraphView : GraphView
     private void AddStyles()
     {
         styleSheets.Add(Resources.Load<StyleSheet>("DialogueSystem/GraphViewStyles"));
+        styleSheets.Add(Resources.Load<StyleSheet>("DialogueSystem/NodeStyles"));
+
     }
 }
