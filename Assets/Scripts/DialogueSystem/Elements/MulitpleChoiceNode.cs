@@ -19,10 +19,14 @@ public class MulitpleChoiceNode : DialogueNode
     {
         base.Draw();
 
-        Button addChoicesButton = new Button()
+        Button addChoicesButton = ElementUtility.CreateButton("Add Choice", () =>
         {
-            text = "Add Choice"
-        };
+            Port choicePort = CreateChoicePort("New Choice");
+
+            Choices.Add("New Choice");
+            
+            outputContainer.Add(choicePort);
+        });
         
         addChoicesButton.AddToClassList("ds-node__button");
         
@@ -32,31 +36,35 @@ public class MulitpleChoiceNode : DialogueNode
         
         foreach (var choice in Choices)
         {
-            Port choicePort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
-
-            choicePort.portName = "";
-
-            Button deleteChoiceButton = new Button()
-            {
-                text = "X"
-            };
-            
-            deleteChoiceButton.AddToClassList("ds-node__button");
-
-            TextField choiceTextField = new TextField()
-            {
-                value = choice
-            };
-            
-            choiceTextField.AddToClassList("ds-node__textfield");
-            choiceTextField.AddToClassList("ds-node__choice-textfield");
-            choiceTextField.AddToClassList("ds-node__textfield__hidden");
-            
-            choicePort.Add(choiceTextField);
-            choicePort.Add(deleteChoiceButton);
+            Port choicePort = CreateChoicePort(choice);
             outputContainer.Add(choicePort);
             
-            RefreshExpandedState();
         }
+        
+        RefreshExpandedState();
     }
+
+    #region Element Creation
+    private Port CreateChoicePort(string choice)
+    {
+        Port choicePort = this.CreatePort();
+
+        Button deleteChoiceButton = ElementUtility.CreateButton("X");
+            
+        deleteChoiceButton.AddToClassList("ds-node__button");
+
+        TextField choiceTextField = ElementUtility.CreateTextField(choice);
+            
+        choiceTextField.AddClasses(
+            "ds-node__textfield",
+            "ds-node__choice-textfield",
+            "ds-node__textfield__hidden"
+        );
+        
+            
+        choicePort.Add(choiceTextField);
+        choicePort.Add(deleteChoiceButton);
+        return choicePort;
+    }
+    #endregion
 }

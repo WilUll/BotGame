@@ -26,39 +26,35 @@ public class DialogueNode : Node
     public virtual void Draw()
     {
         //Title Field
-        TextField dialogueNameTextField = new TextField()
-        {
-            value = DialogueName,
-        };
+        TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName);
         
-        dialogueNameTextField.AddToClassList("ds-node__textfield");
-        dialogueNameTextField.AddToClassList("ds-node__filename-textfield");
-        dialogueNameTextField.AddToClassList("ds-node__textfield__hidden");
+        
+        dialogueNameTextField.AddClasses(
+            "ds-node__textfield",
+            "ds-node__filename-textfield",
+            "ds-node__textfield__hidden"
+            );
 
-        
         titleContainer.Insert(0, dialogueNameTextField);
 
         //InputPort Field
-        Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
-        inputPort.portName = "Input";
+        Port inputPort = this.CreatePort("Input", Orientation.Horizontal, Direction.Input,
+            Port.Capacity.Multi);
         inputContainer.Add(inputPort);
         
         //DialogueText Field
         VisualElement customDataContainer = new VisualElement();
         
         customDataContainer.AddToClassList("ds-node__custom-data-container");
-        Foldout textFoldout = new Foldout()
-        {
-            text = "Dialogue Text"
-        };
+        Foldout textFoldout = ElementUtility.CreateFoldout("Dialogue Text");
 
-        TextField textTextField = new TextField()
-        {
-            value = Text
-        };
-        
-        textTextField.AddToClassList("ds-node__textfield");
-        textTextField.AddToClassList("ds-node__quote-textfield");
+        TextField textTextField = ElementUtility.CreateTextArea(Text);
+
+
+        textTextField.AddClasses(
+            "ds-node__textfield",
+            "ds-node__quote-textfield"
+            );
 
         textFoldout.Add(textTextField);
         

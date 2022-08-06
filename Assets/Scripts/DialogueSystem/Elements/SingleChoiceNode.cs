@@ -22,10 +22,8 @@ public class SingleChoiceNode : DialogueNode
         
         foreach (var choice in Choices)
         {
-            Port choicePort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+            Port choicePort = this.CreatePort(choice);
 
-            choicePort.portName = choice;
-            
             outputContainer.Add(choicePort);
             
             RefreshExpandedState();

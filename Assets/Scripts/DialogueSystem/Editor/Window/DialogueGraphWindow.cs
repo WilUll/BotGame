@@ -20,17 +20,19 @@ public class DialogueGraphWindow : EditorWindow
         AddStyles();
     }
 
-    private void AddStyles()
-    {
-        rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("DialogueSystem/GraphVariables"));
-    }
-
+    #region Elements Addition
     private void AddGraphview()
     {
-        DialogueGraphView graphView = new DialogueGraphView();
+        DialogueGraphView graphView = new DialogueGraphView(this);
 
         graphView.StretchToParentSize();
 
         rootVisualElement.Add(graphView);
     }
+    
+    private void AddStyles()
+    {
+        rootVisualElement.AddStyleSheets("DialogueSystem/GraphVariables");
+    }
+    #endregion
 }
