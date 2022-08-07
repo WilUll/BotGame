@@ -10,9 +10,14 @@ public class DialogueGraphView : GraphView
 {
     private DialogueGraphWindow editorWindow;
     private SearchWindow searchWindow;
+    
+    private SerializableDictionary<string, NodeErrorData> ungroupedNodes;
     public DialogueGraphView(DialogueGraphWindow dialogueGraphWindow)
     {
         editorWindow = dialogueGraphWindow;
+
+        ungroupedNodes = new SerializableDictionary<string, NodeErrorData>();
+        
         AddManipulators();
         AddSearchWindow();
         AddGridBackground();
@@ -126,8 +131,65 @@ public class DialogueGraphView : GraphView
         node.Initialize(position);
         node.Draw();
 
+        AddUngroupedNode(node);
+
         return node;
     }
+    #endregion
+    
+    #region Repeated Elements
+    public void AddUngroupedNode(DialogueNode node)
+    {
+        string nodeName = node.DialogueName;
+
+        if (!ungroupedNodes.ContainsKey(nodeName))
+        {
+            NodeErrorData nodeErrorData = new NodeErrorData();
+            
+            nodeErrorData.Nodes.Add(node);
+            
+            ungroupedNodes.Add(nodeName, nodeErrorData);
+            
+            return;
+        }
+
+        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+
+        ungroupedNodesList.Add(node);
+
+        Color errorColor = ungroupedNodes[nodeName].ErrorData.Color;
+        
+        node.SetErrorColor(errorColor);
+
+        if (ungroupedNodesList.Count == 2)
+        {
+            ungroupedNodesList[0].SetErrorColor(errorColor);
+        }
+    }
+
+    public void RemoveUngroupedNode(DialogueNode node)
+    {
+        string nodeName = node.DialogueName;
+
+        List<DialogueNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+
+        ungroupedNodesList.Remove(node);
+        
+        node.ResetStyle();
+
+        if (ungroupedNodesList.Count == 1)
+        {
+            ungroupedNodesList[0].ResetStyle();
+            
+            return;
+        }
+        
+        if (ungroupedNodesList.Count == 0)
+        {
+            ungroupedNodes.Remove(nodeName);
+        }
+    }
+    
 
     #endregion
 
