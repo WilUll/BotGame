@@ -10,15 +10,18 @@ public class DialogueNode : Node
     public List<string> Choices { get; set; }
     public string Text { get; set; }
     public DialogueType DialogueType { get; set; }
+    public DialogueGroup Group { get; set; }
 
     private Color defaultBackgroundColor;
 
-    public virtual void Initialize(Vector2 position)
+    private DialogueGraphView dialogueGraphView;
+    public virtual void Initialize(DialogueGraphView dialogueGraph, Vector2 position)
     {
         DialogueName = "DialogueName";
         Choices = new List<string>();
         Text = "Dialogue Text.";
 
+        dialogueGraphView = dialogueGraph;
         defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
         
         SetPosition(new Rect(position,Vector2.zero));
@@ -30,7 +33,29 @@ public class DialogueNode : Node
     public virtual void Draw()
     {
         //Title Field
-        TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName);
+        TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName, callback =>
+        {
+            if (Group == null)
+            {
+                dialogueGraphView.RemoveUngroupedNode(this);
+
+                DialogueName = callback.newValue;
+                
+                dialogueGraphView.AddUngroupedNode(this);
+                
+                return;
+            }
+
+            DialogueGroup currentGroup = Group;
+            
+            Debug.Log(callback.newValue);
+
+            dialogueGraphView.RemoveGroupedNode(this, Group);
+            
+            DialogueName = callback.newValue;
+
+            dialogueGraphView.AddGroupedNode(this, currentGroup);
+        });
         
         
         dialogueNameTextField.AddClasses(
