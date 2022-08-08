@@ -744,7 +744,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 149ae4031e448ff4a9c8d868f41e1a46, type: 2}
+      objectReference: {fileID: 2100000, guid: 627a3e56e560eb445b0a0168ae902a03, type: 2}
     - target: {fileID: 4080183997954817116, guid: ade78a6e506d44d41b090f0e8c8904b4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1020,13 +1020,6 @@ MonoBehaviour:
   m_Script: {fileID: 793541655}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries:
-  - id: 0
-    category: 0
-    gameObject: {fileID: 31967959}
-  - id: 1
-    category: 0
-    gameObject: {fileID: 1813563798}
 --- !u!4 &409163479
 Transform:
   m_ObjectHideFlags: 19
@@ -2210,7 +2203,6 @@ MonoBehaviour:
   m_Script: {fileID: 2022178307}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries: []
 --- !u!4 &994731063
 Transform:
   m_ObjectHideFlags: 19
