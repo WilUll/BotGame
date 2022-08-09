@@ -67,9 +67,7 @@ public class SearchWindow : ScriptableObject, ISearchWindowProvider
 
             case Group _:
             {
-                DialogueGroup group = graphView.CreateGroup("DialogueGroup", localMousePosition);
-                
-                graphView.AddElement(group);
+                graphView.CreateGroup("DialogueGroup", localMousePosition);
                 
                 return true;
             }

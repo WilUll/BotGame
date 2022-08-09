@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -6,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class DialogueNode : Node
 {
+    public string ID { get; set; }
     public string DialogueName { get; set; }
     public List<string> Choices { get; set; }
     public string Text { get; set; }
@@ -17,6 +19,7 @@ public class DialogueNode : Node
     private DialogueGraphView dialogueGraphView;
     public virtual void Initialize(DialogueGraphView dialogueGraph, Vector2 position)
     {
+        ID = Guid.NewGuid().ToString();
         DialogueName = "DialogueName";
         Choices = new List<string>();
         Text = "Dialogue Text.";
@@ -33,13 +36,17 @@ public class DialogueNode : Node
     public virtual void Draw()
     {
         //Title Field
-        TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName, callback =>
+        TextField dialogueNameTextField = ElementUtility.CreateTextField(DialogueName, null, callback =>
         {
+            TextField target = (TextField) callback.target;
+
+            target.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+            
             if (Group == null)
             {
                 dialogueGraphView.RemoveUngroupedNode(this);
 
-                DialogueName = callback.newValue;
+                DialogueName = target.value;
                 
                 dialogueGraphView.AddUngroupedNode(this);
                 
@@ -91,6 +98,46 @@ public class DialogueNode : Node
         
         extensionContainer.Add(customDataContainer);
     }
+    
+    #region Overrided Methods
+    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+    {
+        evt.menu.AppendAction("Disconnect Input Ports", action=>DisconnectInputPorts());
+        evt.menu.AppendAction("Disconnect Output Ports", action=>DisconnectOutputPorts());
+
+        base.BuildContextualMenu(evt);
+        
+    }
+    #endregion
+    
+    #region Utility Methods
+
+    public void DisconnectAllPorts()
+    {
+        DisconnectPorts(inputContainer);
+        DisconnectPorts(outputContainer);
+    }
+
+    private void DisconnectInputPorts()
+    {
+        DisconnectPorts(inputContainer);
+    }
+    private void DisconnectOutputPorts()
+    {
+        DisconnectPorts(outputContainer);
+    }
+    private void DisconnectPorts(VisualElement container)
+    {
+        foreach (Port port in container.Children())
+        {
+            if (!port.connected)
+            {
+                continue;
+            }
+            
+            dialogueGraphView.DeleteElements(port.connections);
+        }
+    }
 
     public void SetErrorColor(Color color)
     {
@@ -101,4 +148,5 @@ public class DialogueNode : Node
     {
         mainContainer.style.backgroundColor = defaultBackgroundColor;
     }
+    #endregion
 }
