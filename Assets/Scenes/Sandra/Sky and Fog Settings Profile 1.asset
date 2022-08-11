@@ -17,7 +17,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   enabled:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   colorMode:
     m_OverrideState: 1
@@ -150,7 +150,7 @@ MonoBehaviour:
   active: 1
   rotation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 186
   skyIntensityMode:
     m_OverrideState: 1
     m_Value: 1
@@ -162,13 +162,13 @@ MonoBehaviour:
     m_Value: 33.85
   upperHemisphereLuxValue:
     m_OverrideState: 0
-    m_Value: 1.9195696
+    m_Value: 1.0360186
   upperHemisphereLuxColor:
     m_OverrideState: 0
-    m_Value: {x: 0.5, y: 0.34109473, z: 0.28717223}
+    m_Value: {x: 0.4081205, y: 0.4330816, z: 0.5}
   desiredLuxValue:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 10000
   updateMode:
     m_OverrideState: 1
     m_Value: 0
@@ -180,10 +180,10 @@ MonoBehaviour:
     m_Value: 0
   hdriSky:
     m_OverrideState: 1
-    m_Value: {fileID: 8900000, guid: 8f142f7edb453194c9c89327adf64cd2, type: 3}
+    m_Value: {fileID: 8900000, guid: d349591563eaf8047814c3e345d9abbc, type: 3}
   distortionMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   flowmap:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -194,7 +194,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value:
       mode: 1
-      customValue: 0
+      customValue: 360
       additiveValue: 0
       multiplyValue: 1
   scrollSpeed:

@@ -11,8 +11,13 @@ public class MulitpleChoiceNode : DialogueNode
         base.Initialize(dialogueGraph, position);
 
         DialogueType = DialogueType.MultipleChoice;
-        
-        Choices.Add("New Choice");
+
+        ChoiceSaveData choiceSaveData = new ChoiceSaveData()
+        {
+            Text = "New Choice"
+        };
+
+        Choices.Add(choiceSaveData);
     }
 
     public override void Draw()
@@ -21,9 +26,14 @@ public class MulitpleChoiceNode : DialogueNode
 
         Button addChoicesButton = ElementUtility.CreateButton("Add Choice", () =>
         {
-            Port choicePort = CreateChoicePort("New Choice");
+            ChoiceSaveData choiceSaveData = new ChoiceSaveData()
+            {
+                Text = "New Choice"
+            };
 
-            Choices.Add("New Choice");
+            Choices.Add(choiceSaveData);
+            Port choicePort = CreateChoicePort(choiceSaveData);
+
             
             outputContainer.Add(choicePort);
         });
@@ -45,15 +55,37 @@ public class MulitpleChoiceNode : DialogueNode
     }
 
     #region Element Creation
-    private Port CreateChoicePort(string choice)
+    private Port CreateChoicePort(object userData)
     {
         Port choicePort = this.CreatePort();
 
-        Button deleteChoiceButton = ElementUtility.CreateButton("X");
+        choicePort.userData = userData;
+
+        ChoiceSaveData choiceSaveData = (ChoiceSaveData) userData;
+        
+        Button deleteChoiceButton = ElementUtility.CreateButton("X", () =>
+        {
+            if (Choices.Count == 1)
+            {
+                return;
+            }
+
+            if (choicePort.connected)
+            {
+                dialogueGraphView.DeleteElements(choicePort.connections);
+            }
+
+            Choices.Remove(choiceSaveData);
+            
+            dialogueGraphView.RemoveElement(choicePort);
+        });
             
         deleteChoiceButton.AddToClassList("ds-node__button");
 
-        TextField choiceTextField = ElementUtility.CreateTextField(choice);
+        TextField choiceTextField = ElementUtility.CreateTextField(choiceSaveData.Text, null, callback =>
+        {
+            choiceSaveData.Text = callback.newValue;
+        });
             
         choiceTextField.AddClasses(
             "ds-node__textfield",

@@ -9,19 +9,19 @@ public class DialogueNode : Node
 {
     public string ID { get; set; }
     public string DialogueName { get; set; }
-    public List<string> Choices { get; set; }
+    public List<ChoiceSaveData> Choices { get; set; }
     public string Text { get; set; }
     public DialogueType DialogueType { get; set; }
     public DialogueGroup Group { get; set; }
 
     private Color defaultBackgroundColor;
 
-    private DialogueGraphView dialogueGraphView;
+    protected DialogueGraphView dialogueGraphView;
     public virtual void Initialize(DialogueGraphView dialogueGraph, Vector2 position)
     {
         ID = Guid.NewGuid().ToString();
         DialogueName = "DialogueName";
-        Choices = new List<string>();
+        Choices = new List<ChoiceSaveData>();
         Text = "Dialogue Text.";
 
         dialogueGraphView = dialogueGraph;

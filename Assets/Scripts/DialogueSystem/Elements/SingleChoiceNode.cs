@@ -10,8 +10,13 @@ public class SingleChoiceNode : DialogueNode
         base.Initialize(dialogueGraph, position);
 
         DialogueType = DialogueType.SingleChoice;
+
+        ChoiceSaveData choiceSaveData = new ChoiceSaveData()
+        {
+            Text = "Next Dialogue"
+        };
         
-        Choices.Add("Next Dialogue");
+        Choices.Add(choiceSaveData);
     }
 
     public override void Draw()
@@ -22,7 +27,9 @@ public class SingleChoiceNode : DialogueNode
         
         foreach (var choice in Choices)
         {
-            Port choicePort = this.CreatePort(choice);
+            Port choicePort = this.CreatePort(choice.Text);
+
+            choicePort.userData = choice;
 
             outputContainer.Add(choicePort);
             
