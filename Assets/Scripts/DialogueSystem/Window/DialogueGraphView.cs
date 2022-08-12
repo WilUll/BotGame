@@ -317,6 +317,21 @@ public class DialogueGraphView : GraphView
 
                 dialogueGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
                 
+                if (string.IsNullOrEmpty(dialogueGroup.title))
+                {
+                    if (!string.IsNullOrEmpty(dialogueGroup.OldTitle))
+                    {
+                        ++RepeatedNamesAmount;
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(dialogueGroup.OldTitle))
+                    {
+                        --RepeatedNamesAmount;
+                    }
+                }
+                
                 RemoveGroup(dialogueGroup);
 
                 dialogueGroup.OldTitle = dialogueGroup.title;
@@ -592,6 +607,17 @@ public class DialogueGraphView : GraphView
         Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
 
         return localMousePosition;
+    }
+
+    public void ClearGraph()
+    {
+        graphElements.ForEach(graphElement => RemoveElement(graphElement));
+        
+        groups.Clear();
+        groupedNodes.Clear();
+        ungroupedNodes.Clear();
+
+        repeatedNamesAmount = 0;
     }
 
     #endregion

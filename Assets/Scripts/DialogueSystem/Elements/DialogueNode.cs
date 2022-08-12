@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -41,6 +42,21 @@ public class DialogueNode : Node
             TextField target = (TextField) callback.target;
 
             target.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+
+            if (string.IsNullOrEmpty(target.value))
+            {
+                if (!string.IsNullOrEmpty(DialogueName))
+                {
+                    ++dialogueGraphView.RepeatedNamesAmount;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(DialogueName))
+                {
+                    --dialogueGraphView.RepeatedNamesAmount;
+                }
+            }
             
             if (Group == null)
             {
@@ -84,7 +100,10 @@ public class DialogueNode : Node
         customDataContainer.AddToClassList("ds-node__custom-data-container");
         Foldout textFoldout = ElementUtility.CreateFoldout("Dialogue Text");
 
-        TextField textTextField = ElementUtility.CreateTextArea(Text);
+        TextField textTextField = ElementUtility.CreateTextArea(Text, null, callback =>
+        {
+            Text = callback.newValue;
+        });
 
 
         textTextField.AddClasses(
@@ -137,6 +156,13 @@ public class DialogueNode : Node
             
             dialogueGraphView.DeleteElements(port.connections);
         }
+    }
+
+    public bool IsStartingNode()
+    {
+        Port inputPort = (Port) inputContainer.Children().First();
+
+        return !inputPort.connected;
     }
 
     public void SetErrorColor(Color color)

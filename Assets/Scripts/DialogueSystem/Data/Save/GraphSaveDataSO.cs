@@ -10,7 +10,7 @@ public class GraphSaveDataSO : ScriptableObject
     [field: SerializeField] public List<NodeSaveData> Nodes { get; set; }
     [field: SerializeField] public List<string> OldGroupNames { get; set; }
     [field: SerializeField] public List<string> OldUngroupedNodeNames { get; set; }
-    [field: SerializeField] public SerializableDictionary<string, List<string>> OldGroupedNames { get; set; }
+    [field: SerializeField] public SerializableDictionary<string, List<string>> OldGroupedNodeNames { get; set; }
 
     public void Initialize(string fileName)
     {

@@ -8,8 +8,9 @@ using UnityEngine.UIElements;
 
 public class DialogueGraphWindow : EditorWindow
 {
+    private DialogueGraphView graphView;
     private readonly string defaultFileName = "DialogueName";
-    private TextField fieldNameTextField;
+    private static TextField fieldNameTextField;
     private Button saveButton;
     [MenuItem("Window/Graph")]
     public static void OpenGraph()
@@ -28,7 +29,7 @@ public class DialogueGraphWindow : EditorWindow
     #region Elements Addition
     private void AddGraphview()
     {
-        DialogueGraphView graphView = new DialogueGraphView(this);
+        graphView = new DialogueGraphView(this);
 
         graphView.StretchToParentSize();
 
@@ -44,16 +45,64 @@ public class DialogueGraphWindow : EditorWindow
             fieldNameTextField.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
         });
 
-        saveButton = ElementUtility.CreateButton("Save");
+        saveButton = ElementUtility.CreateButton("Save", () => Save());
+
+        Button clearButton = ElementUtility.CreateButton("Clear", () => Clear());
+        Button resetButton = ElementUtility.CreateButton("Reset", () => ResetGraph());
+
         
         toolbar.Add(fieldNameTextField);
         toolbar.Add(saveButton);
+        toolbar.Add(clearButton);
+        toolbar.Add(resetButton);
 
         toolbar.AddStyleSheets("DialogueSystem/ToolbarStyles");
         
         rootVisualElement.Add(toolbar);
     }
-    
+
+    private void ResetGraph()
+    {
+        if (EditorUtility.DisplayDialog(
+                "Reset the graph?",
+                "Are you sure?",
+                "Yes",
+                "No"))
+        {
+            graphView.ClearGraph();
+            
+            UpdateFileName(defaultFileName);
+        }
+    }
+
+    private void Clear()
+    {
+        if (EditorUtility.DisplayDialog(
+                "Clear the graph?",
+                "Are you sure?",
+                "Yes",
+                "No"))
+        {
+            graphView.ClearGraph();
+        }
+    }
+
+    private void Save()
+    {
+        if (string.IsNullOrEmpty(fieldNameTextField.value))
+        {
+            EditorUtility.DisplayDialog(
+                "Invalid file name",
+                "Ehhh du måste ha ett namn på filen Sandra..",
+                "OK"
+            );
+            
+            return;
+        }
+        IOUtility.Initialize(graphView, fieldNameTextField.value);
+        IOUtility.Save();
+    }
+
     private void AddStyles()
     {
         rootVisualElement.AddStyleSheets("DialogueSystem/GraphVariables");
@@ -61,6 +110,11 @@ public class DialogueGraphWindow : EditorWindow
     #endregion
 
     #region Utility Methods
+
+    public static void UpdateFileName(string newFileName)
+    {
+        fieldNameTextField.value = newFileName;
+    }
 
     public void EnableSaving()
     {
