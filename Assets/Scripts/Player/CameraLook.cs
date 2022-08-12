@@ -8,6 +8,8 @@ public class CameraLook : MonoBehaviour
 {
     public InputManager InputManager;
 
+    public bool isInteracting;
+    
     public float sensitivity;
     public bool InvertY;
     
@@ -33,8 +35,11 @@ public class CameraLook : MonoBehaviour
     {
         RotationInput();
 
-        CameraHolder.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.rotation = Quaternion.Euler(0,yRotation,0);
+        if (!isInteracting)
+        {
+            CameraHolder.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            transform.rotation = Quaternion.Euler(0,yRotation,0);
+        }
     }
 
     private void RotationInput()

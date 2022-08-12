@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class PlayerInteract : MonoBehaviour
 {
     public GameObject ObjectHolder;
+    CameraLook cameraLook;
+    PlayerController playerController;
 
     public bool isHolding;
     private IInteractable heldObjectScript;
@@ -16,38 +18,101 @@ public class PlayerInteract : MonoBehaviour
     private Camera cam;
 
     public InputManager InputManager;
+
+    private bool activeCrosshair;
+
+    [SerializeField] private PlayerCanvas canvasScript;
+    
+    //grabbed object
+    private Vector3 startPos;
     
     private void Start()
     {
         cam = Camera.main;
+        cameraLook = GetComponent<CameraLook>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        RaycastHit hit;
+        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0)),out hit, 100f))
         {
-            Interact();
+            canvasScript.ActivateCrosshair(hit.collider.gameObject.GetComponent<IInteractable>() != null);
+            activeCrosshair = hit.collider.gameObject.GetComponent<IInteractable>() != null;
+        }
+        if (isHolding && Input.GetKeyDown(KeyCode.E) || activeCrosshair && Input.GetKeyDown(KeyCode.E))
+        {
+            Interact(hit.collider.gameObject);
         }
     }
 
-    private void Interact()
+    private void Interact(GameObject interactableObject)
     {
         if (!isHolding)
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
-                if (interactable == null) return;
-                interactable.Interact(this);
-                heldObjectScript = hit.collider.gameObject.GetComponent<IInteractable>();
-                transform.rotation = quaternion.identity;
-            }
+            StartCoroutine(InteractAnim(interactableObject));
+            isHolding = true;
+
+            cameraLook.isInteracting = true;
+            playerController.enabled = false;
+
+            heldObjectScript = interactableObject.GetComponent<IInteractable>();
+
+            heldObjectScript.Interact(this);
         }
         else
         {
+            StartCoroutine(StopInteractAnim());
+            isHolding = false;
+
+            cameraLook.isInteracting = false;
+            playerController.enabled = true;
+            
             heldObjectScript.EndInteract();
+
+            heldObjectScript = null;
+            
+            cameraLook.isInteracting = false;
+            playerController.enabled = true;
         }
+    }
+
+    IEnumerator InteractAnim(GameObject interactableObject)
+    {
+        startPos = interactableObject.transform.position;
+        float elapsedTime = 0;
+        float waitTime = 0.5f;
+        Vector3 currentPos = interactableObject.transform.position;
+        while (elapsedTime < waitTime)
+        {
+            interactableObject.transform.position = Vector3.Lerp(currentPos, ObjectHolder.transform.position, (elapsedTime / waitTime));
+            elapsedTime += Time.deltaTime;
+ 
+            yield return null;
+        }  
+        interactableObject.transform.position = ObjectHolder.transform.position;
+        interactableObject.transform.parent = ObjectHolder.transform;
+        yield return null;
+    }
+    
+    IEnumerator StopInteractAnim()
+    {
+        GameObject heldObject = ObjectHolder.GetComponentInChildren<Transform>().gameObject;
+        float elapsedTime = 0;
+        float waitTime = 0.5f;
+        Vector3 currentPos = heldObject.transform.position;
+        while (elapsedTime < waitTime)
+        {
+            heldObject.transform.position = Vector3.Lerp(currentPos, startPos, (elapsedTime / waitTime));
+            elapsedTime += Time.deltaTime;
+ 
+            // Yield here
+            yield return null;
+        }  
+        // Make sure we got there
+        heldObject.transform.position = startPos;
+        heldObject.transform.parent = null;
+        yield return null;
     }
 }
