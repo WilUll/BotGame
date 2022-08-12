@@ -12,7 +12,7 @@ public class Door : MonoBehaviour, IInteractable
 
     float currentYRot;
 
-    private bool isOpen;
+    public bool isOpen;
     // Start is called before the first frame update
     void Start()
     {
