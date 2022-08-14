@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public static class IOUtility
@@ -17,6 +18,10 @@ public static class IOUtility
 
     private static Dictionary<string, DialogueGroupSO> createdDialogueGroups;
     private static Dictionary<string, DialogueSO> createdDialogue;
+
+    private static Dictionary<string, DialogueGroup> loadedGroups;
+    private static Dictionary<string, DialogueNode> loadedNodes;
+
     public static void Initialize(DialogueGraphView dsGraphView, string graphName)
     {
         graphView = dsGraphView;
@@ -28,6 +33,9 @@ public static class IOUtility
 
         createdDialogueGroups = new Dictionary<string, DialogueGroupSO>();
         createdDialogue = new Dictionary<string, DialogueSO>();
+
+        loadedGroups = new Dictionary<string, DialogueGroup>();
+        loadedNodes = new Dictionary<string, DialogueNode>();
     }
     #region Save Methods
 
@@ -52,6 +60,104 @@ public static class IOUtility
         SaveAsset(graphData);
         SaveAsset(dialogueContainer);
     }
+
+    #endregion
+
+    #region Load Methods
+    public static void Load()
+    {
+        GraphSaveDataSO graphData = LoadAsset<GraphSaveDataSO>("Assets/Scripts/DialogueSystem/Graphs", graphFilename);
+
+        if (graphData == null)
+        {
+            EditorUtility.DisplayDialog(
+                "Couldn't load the file!",
+                "The file at the following path could not be found:\n\n" +
+                $"Assets/Scripts/DialogueSystem/Graphs{graphFilename}\n\n" +
+                "Make sure you chose the right file and its placed at the correct path",
+                "Thanks!"
+            );
+            
+            return;
+        }
+        
+        DialogueGraphWindow.UpdateFileName(graphData.FileName);
+
+        LoadGroups(graphData.Groups);
+        LoadNodes(graphData.Nodes);
+        LoadNodeConnections();
+    }
+
+    private static void LoadNodeConnections()
+    {
+        foreach (KeyValuePair<string,DialogueNode> loadedNode in loadedNodes)
+        {
+            foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
+            {
+                ChoiceSaveData choiceData = (ChoiceSaveData) choicePort.userData;
+
+                if (string.IsNullOrEmpty(choiceData.NodeID))
+                {
+                    continue;
+                }
+
+                DialogueNode nextNode = loadedNodes[choiceData.NodeID];
+
+                Port nextNodeInputPort = (Port) nextNode.inputContainer.Children().First();
+
+                Edge edge = choicePort.ConnectTo(nextNodeInputPort);
+                
+                graphView.AddElement(edge);
+
+                loadedNode.Value.RefreshPorts();
+            }
+        }
+    }
+
+
+    private static void LoadGroups(List<GroupSaveData> graphDataGroups)
+    {
+        foreach (GroupSaveData groupData in graphDataGroups)
+        {
+            DialogueGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
+
+            group.ID = groupData.ID;
+            
+            loadedGroups.Add(group.ID, group);
+        }
+    }
+    
+    private static void LoadNodes(List<NodeSaveData> graphDataNodes)
+    {
+        foreach (NodeSaveData nodeData in graphDataNodes)
+        {
+            List<ChoiceSaveData> choice = CloneNodeChoices(nodeData.Choices);
+            
+            DialogueNode node = graphView.CreateNode(nodeData.Name, nodeData.DialogueType, nodeData.Position, false);
+
+            node.ID = nodeData.ID;
+            node.Choices = choice;
+            node.Text = nodeData.Text;
+            
+            node.Draw();
+            
+            graphView.AddElement(node);
+            
+            loadedNodes.Add(node.ID, node);
+            
+            if (string.IsNullOrEmpty(nodeData.GroupID))
+            {
+                continue;
+            }
+
+            DialogueGroup group = loadedGroups[nodeData.GroupID];
+
+            node.Group = group;
+            
+            group.AddElement(node);
+        }
+    }
+
 
     #endregion
 
@@ -114,6 +220,8 @@ public static class IOUtility
 
         SaveAsset(dialogueGroup);
     }
+    
+
 
     #endregion
 
@@ -197,17 +305,7 @@ public static class IOUtility
 
     private static void SaveNodeToGraph(DialogueNode node, GraphSaveDataSO graphData)
     {
-        List<ChoiceSaveData> choices = new List<ChoiceSaveData>();
-        foreach (ChoiceSaveData choice in node.Choices)
-        {
-            ChoiceSaveData choiceData = new ChoiceSaveData()
-            {
-                Text = choice.Text,
-                NodeID = choice.NodeID
-            };
-
-            choices.Add(choiceData);
-        }
+        List<ChoiceSaveData> choices = CloneNodeChoices(node.Choices);
         NodeSaveData nodeData = new NodeSaveData()
         {
             ID = node.ID,
@@ -271,7 +369,7 @@ public static class IOUtility
     
     private static void UpdateOldUngroupedNodes(List<string> currentUngroupedNodeNames, GraphSaveDataSO graphData)
     {
-        if (graphData.OldGroupNames != null && graphData.OldGroupNames.Count != 0)
+        if (graphData.OldUngroupedNodeNames != null && graphData.OldUngroupedNodeNames.Count != 0)
         {
             List<string> nodesToRemove = graphData.OldUngroupedNodeNames.Except(currentUngroupedNodeNames).ToList();
 
@@ -315,7 +413,7 @@ public static class IOUtility
     
     #region Creation Methods
 
-    private static void CreateFolder(string path, string folderName)
+    public static void CreateFolder(string path, string folderName)
     {
         if (AssetDatabase.IsValidFolder($"{path}/{folderName}"))
         {
@@ -329,7 +427,7 @@ public static class IOUtility
 
     #region Utility Methods
 
-    private static void CreateStaticFolder()
+    public static void CreateStaticFolder()
     {
         CreateFolder("Assets/Scripts/DialogueSystem", "Graphs");
         CreateFolder("Assets", "DialogueSystem");
@@ -363,24 +461,39 @@ public static class IOUtility
         return AssetDatabase.LoadAssetAtPath<T>(fullPath);
     }
     
-    private static void RemoveFolder(string fullPath)
+    public static void RemoveFolder(string fullPath)
     {
         FileUtil.DeleteFileOrDirectory($"{fullPath}.meta");
         FileUtil.DeleteFileOrDirectory($"{fullPath}/");
     }
     
-    private static void RemoveAsset(string path, string nodeToRemove)
+    public static void RemoveAsset(string path, string nodeToRemove)
     {
         AssetDatabase.DeleteAsset($"{path}/{nodeToRemove}.asset");
     }
     
-    private static void SaveAsset(UnityEngine.Object asset)
+    public static void SaveAsset(UnityEngine.Object asset)
     {
         EditorUtility.SetDirty(asset);
         
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+    private static List<ChoiceSaveData> CloneNodeChoices(List<ChoiceSaveData> nodeChoices)
+    {
+        List<ChoiceSaveData> choices = new List<ChoiceSaveData>();
+        foreach (ChoiceSaveData choice in nodeChoices)
+        {
+            ChoiceSaveData choiceData = new ChoiceSaveData()
+            {
+                Text = choice.Text,
+                NodeID = choice.NodeID
+            };
 
+            choices.Add(choiceData);
+        }
+
+        return choices;
+    }
     #endregion
 }

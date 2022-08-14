@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -47,19 +48,29 @@ public class DialogueGraphWindow : EditorWindow
 
         saveButton = ElementUtility.CreateButton("Save", () => Save());
 
+        Button loadButton = ElementUtility.CreateButton("Load", () => Load());
         Button clearButton = ElementUtility.CreateButton("Clear", () => Clear());
         Button resetButton = ElementUtility.CreateButton("Reset", () => ResetGraph());
+        Button miniMapButton = ElementUtility.CreateButton("Minimap", () => ToggleMiniMap());
 
-        
         toolbar.Add(fieldNameTextField);
         toolbar.Add(saveButton);
+        toolbar.Add(loadButton);
         toolbar.Add(clearButton);
         toolbar.Add(resetButton);
+        toolbar.Add(miniMapButton);
+
 
         toolbar.AddStyleSheets("DialogueSystem/ToolbarStyles");
         
         rootVisualElement.Add(toolbar);
     }
+
+    private void ToggleMiniMap()
+    {
+        graphView.ToggleMiniMap();
+    }
+
 
     private void ResetGraph()
     {
@@ -75,6 +86,21 @@ public class DialogueGraphWindow : EditorWindow
         }
     }
 
+    private void Load()
+    {
+        string filePath = EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/Scripts/DialogueSystem/Graphs", "asset");
+
+        if (string.IsNullOrEmpty(filePath))
+        {
+            return;
+        }
+        
+        graphView.ClearGraph();
+        
+        IOUtility.Initialize(graphView, Path.GetFileNameWithoutExtension(filePath));
+        IOUtility.Load();
+    }
+    
     private void Clear()
     {
         if (EditorUtility.DisplayDialog(

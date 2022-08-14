@@ -18,10 +18,10 @@ public class DialogueNode : Node
     private Color defaultBackgroundColor;
 
     protected DialogueGraphView dialogueGraphView;
-    public virtual void Initialize(DialogueGraphView dialogueGraph, Vector2 position)
+    public virtual void Initialize(string nodeName, DialogueGraphView dialogueGraph, Vector2 position)
     {
         ID = Guid.NewGuid().ToString();
-        DialogueName = "DialogueName";
+        DialogueName = nodeName;
         Choices = new List<ChoiceSaveData>();
         Text = "Dialogue Text.";
 
@@ -71,8 +71,6 @@ public class DialogueNode : Node
 
             DialogueGroup currentGroup = Group;
             
-            Debug.Log(callback.newValue);
-
             dialogueGraphView.RemoveGroupedNode(this, Group);
             
             DialogueName = callback.newValue;

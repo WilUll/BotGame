@@ -10,6 +10,8 @@ public class DialogueGraphView : GraphView
 {
     private DialogueGraphWindow editorWindow;
     private SearchWindow searchWindow;
+
+    private MiniMap miniMap;
     
     private SerializableDictionary<string, NodeErrorData> ungroupedNodes;
     private SerializableDictionary<string, GroupErrorData> groups;
@@ -50,6 +52,7 @@ public class DialogueGraphView : GraphView
         
         AddManipulators();
         AddSearchWindow();
+        AddMiniMap();
         AddGridBackground();
 
         OnElementsDeleted();
@@ -59,6 +62,7 @@ public class DialogueGraphView : GraphView
         OnGraphViewChanged();
             
         AddStyles();
+        AddMiniMapStyles();
     }
 
 
@@ -126,7 +130,7 @@ public class DialogueGraphView : GraphView
     {
         ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
             menuEvent => menuEvent.menu.AppendAction(actionTitle,
-                actionEvent => AddElement(CreateNode(dialogueType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
+                actionEvent => AddElement(CreateNode("DialogueName", dialogueType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
         );
 
         return contextualMenuManipulator;
@@ -161,7 +165,7 @@ public class DialogueGraphView : GraphView
 
 
 
-    public DialogueNode CreateNode(DialogueType dialogueType, Vector2 position)
+    public DialogueNode CreateNode(string nodeName, DialogueType dialogueType, Vector2 position, bool shouldDraw = true)
     {
         //Type nodeType = Type.GetType($"{dialogueType}Node");
 
@@ -177,8 +181,12 @@ public class DialogueGraphView : GraphView
         }
 
 
-        node.Initialize(this, position);
-        node.Draw();
+        node.Initialize(nodeName, this, position);
+
+        if (shouldDraw)
+        {
+            node.Draw();
+        }
 
         AddUngroupedNode(node);
 
@@ -574,6 +582,21 @@ public class DialogueGraphView : GraphView
         nodeCreationRequest = context =>
             UnityEditor.Experimental.GraphView.SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
     }
+    
+    private void AddMiniMap()
+    {
+        miniMap = new MiniMap()
+        {
+            anchored = true
+        };
+        
+        miniMap.SetPosition(new Rect(15, 50, 200, 200));
+        
+        Add(miniMap);
+
+        miniMap.visible = false;
+    }
+    
     private void AddGridBackground()
     {
         GridBackground gridBackground = new GridBackground();
@@ -591,6 +614,17 @@ public class DialogueGraphView : GraphView
         );
     }
 
+    private void AddMiniMapStyles()
+    {
+        StyleColor backgroundColor = new StyleColor(new Color32(29, 29, 30, 255));
+        StyleColor borderColor = new StyleColor(new Color32(51, 51, 51, 255));
+
+        miniMap.style.backgroundColor = backgroundColor;
+        miniMap.style.borderBottomColor = borderColor;
+        miniMap.style.borderLeftColor = borderColor;
+        miniMap.style.borderRightColor = borderColor;
+        miniMap.style.borderTopColor = borderColor;
+    }
     #endregion
 
     #region Utilites
@@ -618,6 +652,11 @@ public class DialogueGraphView : GraphView
         ungroupedNodes.Clear();
 
         repeatedNamesAmount = 0;
+    }
+
+    public void ToggleMiniMap()
+    {
+        miniMap.visible = !miniMap.visible;
     }
 
     #endregion

@@ -49,7 +49,7 @@ public class SearchWindow : ScriptableObject, ISearchWindowProvider
         {
             case DialogueType.SingleChoice:
             {
-                SingleChoiceNode singleChoiceNode = (SingleChoiceNode) graphView.CreateNode(DialogueType.SingleChoice, localMousePosition);
+                SingleChoiceNode singleChoiceNode = (SingleChoiceNode) graphView.CreateNode("DialogueName", DialogueType.SingleChoice, localMousePosition);
                 
                 graphView.AddElement(singleChoiceNode);
                 
@@ -58,7 +58,7 @@ public class SearchWindow : ScriptableObject, ISearchWindowProvider
             
             case DialogueType.MultipleChoice:
             {
-                MulitpleChoiceNode multipleChoiceNode = (MulitpleChoiceNode) graphView.CreateNode(DialogueType.MultipleChoice, localMousePosition);
+                MulitpleChoiceNode multipleChoiceNode = (MulitpleChoiceNode) graphView.CreateNode("DialogueName", DialogueType.MultipleChoice, localMousePosition);
                 
                 graphView.AddElement(multipleChoiceNode);
                 
