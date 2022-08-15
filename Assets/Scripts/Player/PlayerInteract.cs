@@ -9,8 +9,8 @@ using UnityEngine.InputSystem;
 public class PlayerInteract : MonoBehaviour
 {
     public GameObject ObjectHolder;
-    CameraLook cameraLook;
-    PlayerController playerController;
+    [HideInInspector] public CameraLook cameraLook;
+    [HideInInspector]public PlayerController playerController;
 
     public bool isHolding;
     private IInteractable heldObjectScript;
@@ -47,38 +47,23 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private void Interact(GameObject interactableObject)
+    public void Interact(GameObject interactableObject)
     {
         if (!isHolding)
         {
-            StartCoroutine(InteractAnim(interactableObject));
-            isHolding = true;
-
-            cameraLook.isInteracting = true;
-            playerController.enabled = false;
-
             heldObjectScript = interactableObject.GetComponent<IInteractable>();
 
             heldObjectScript.Interact(this);
         }
         else
         {
-            StartCoroutine(StopInteractAnim());
-            isHolding = false;
-
-            cameraLook.isInteracting = false;
-            playerController.enabled = true;
-            
             heldObjectScript.EndInteract();
 
             heldObjectScript = null;
-            
-            cameraLook.isInteracting = false;
-            playerController.enabled = true;
         }
     }
 
-    IEnumerator InteractAnim(GameObject interactableObject)
+    public IEnumerator InteractAnim(GameObject interactableObject)
     {
         startPos = interactableObject.transform.position;
         float elapsedTime = 0;
@@ -96,7 +81,7 @@ public class PlayerInteract : MonoBehaviour
         yield return null;
     }
     
-    IEnumerator StopInteractAnim()
+    public IEnumerator StopInteractAnim()
     {
         GameObject heldObject = ObjectHolder.GetComponentInChildren<Transform>().gameObject;
         float elapsedTime = 0;
