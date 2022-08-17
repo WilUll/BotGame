@@ -278,7 +278,10 @@ public static class IOUtility
             node.Text,
             ConvertNodeChoicesToDialogueChoices(node.Choices),
             node.DialogueType,
-            node.IsStartingNode()
+            node.IsStartingNode(),
+            (AudioClip) node.AudioClipToPlay,
+            node.BotEmotion,
+            node.Speaker
             );
         
         createdDialogue.Add(node.ID, dialogue);

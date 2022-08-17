@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = System.Object;
 
 public class DialogueNode : Node
 {
@@ -14,6 +16,12 @@ public class DialogueNode : Node
     public string Text { get; set; }
     public DialogueType DialogueType { get; set; }
     public DialogueGroup Group { get; set; }
+    
+    public AudioClip AudioClipToPlay { get; set; }
+
+    public BotEmotions BotEmotion { get; set; }
+
+    public SpeakingColor Speaker { get; set; }
 
     private Color defaultBackgroundColor;
 
@@ -104,6 +112,8 @@ public class DialogueNode : Node
         });
 
 
+
+
         textTextField.AddClasses(
             "ds-node__textfield",
             "ds-node__quote-textfield"
@@ -113,6 +123,37 @@ public class DialogueNode : Node
         
         customDataContainer.Add(textFoldout);
         
+        Foldout textFoldoutOptions = ElementUtility.CreateFoldout("Dialogue Options");
+        
+        //AudioClip Options
+        ObjectField audioClipField = ElementUtility.CreateAudioField("Audio Clip",  callback =>
+        {
+            AudioClipToPlay = (AudioClip) callback.newValue;
+            Debug.Log(AudioClipToPlay);
+        });
+
+        textFoldoutOptions.Add(audioClipField);
+        
+        //Emotion Options
+        EnumField emotionEnumField = ElementUtility.CreateEnumField(BotEmotions.Neutral, "Emotion", callback =>
+        {
+            BotEmotion = (BotEmotions)callback.newValue;
+            Debug.Log(BotEmotion);
+
+        });
+        textFoldoutOptions.Add(emotionEnumField);
+        
+        //Color Options
+        EnumField colorEnumField = ElementUtility.CreateEnumField(SpeakingColor.Bot, "Speaker", callback =>
+        {
+            Speaker = (SpeakingColor)callback.newValue;
+            Debug.Log(Speaker);
+
+        });
+        textFoldoutOptions.Add(colorEnumField);
+        
+        customDataContainer.Add(textFoldoutOptions);
+
         extensionContainer.Add(customDataContainer);
     }
     

@@ -1,6 +1,9 @@
 using System;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 public static class ElementUtility
 {
@@ -49,6 +52,30 @@ public static class ElementUtility
         }
 
         return textField;
+    }
+
+    public static EnumField CreateEnumField(Enum value, string label, EventCallback<ChangeEvent<Enum>> onValueChanged = null)
+    {
+        EnumField enumField = new EnumField(label, value);
+        
+        if (onValueChanged != null)
+        {
+            enumField.RegisterValueChangedCallback(onValueChanged);
+        }
+
+        return enumField;
+    }
+
+    public static ObjectField CreateAudioField(string label = "Object Field Clip", EventCallback<ChangeEvent<Object>> onValueChanged = null)
+    {
+        ObjectField objectField = new ObjectField(label);
+        objectField.objectType = typeof(AudioClip);
+        if (onValueChanged != null)
+        {
+            objectField.RegisterValueChangedCallback(onValueChanged);
+        }
+
+        return objectField;
     }
 
     public static TextField CreateTextArea(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)

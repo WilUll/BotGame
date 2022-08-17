@@ -20,6 +20,11 @@ public class DialogueInspector : Editor
     /* INDEXES */
     private SerializedProperty selectedDialogueGroupIndexProperty;
     private SerializedProperty selectedDialogueIndexProperty;
+    
+    /* UI */
+    private SerializedProperty textUIProperty;
+    private SerializedProperty buttonPanelProperty;
+    private SerializedProperty skipButtonsProperty;
 
     private void OnEnable()
     {
@@ -32,6 +37,10 @@ public class DialogueInspector : Editor
 
         selectedDialogueGroupIndexProperty = serializedObject.FindProperty("selectedDialogueGroupIndex");
         selectedDialogueIndexProperty = serializedObject.FindProperty("selectedDialogueIndex");
+        
+        textUIProperty = serializedObject.FindProperty("textUI");
+        buttonPanelProperty = serializedObject.FindProperty("buttonPanel");
+        skipButtonsProperty = serializedObject.FindProperty("skipButtons");
     }
 
     public override void OnInspectorGUI()
@@ -96,9 +105,12 @@ public class DialogueInspector : Editor
 
         DrawDialogueArea(dialogueNames, dialogueFolderPath);
 
+        DrawUIArea();
 
         serializedObject.ApplyModifiedProperties();
     }
+
+
 
     private void StopDrawing(string reason, MessageType messageType = MessageType.Info)
     {
@@ -191,7 +203,19 @@ public class DialogueInspector : Editor
 
         InspectorUtility.DrawSpace();
     }
+    private void DrawUIArea()
+    {
+        InspectorUtility.DrawHeader("UI");
 
+        textUIProperty.DrawPropertyField();
+        
+        buttonPanelProperty.DrawPropertyField();
+        
+
+        skipButtonsProperty.DrawPropertyField();
+
+        InspectorUtility.DrawSpace();
+    }
     #endregion
 
     #region Index Methods
