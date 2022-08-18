@@ -10320,7 +10320,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!23 &2388956656422231561
 MeshRenderer:
@@ -13798,7 +13798,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6413017384806957755
 Transform:
@@ -14208,7 +14208,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &6900980883966980652
 GameObject:
@@ -16132,7 +16132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37cb5594da1a0ea4395d1e196c830a02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OffsetRotAmount: {x: 0, y: -0.42261827, z: 0, w: 0.90630776}
+  OffsetRotAmount: {x: 0, y: -0.34202012, z: 0, w: 0.9396926}
   animationCurve:
     serializedVersion: 2
     m_Curve:
