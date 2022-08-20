@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
     <Name>k__BackingField: MainDialogue1
-    <Position>k__BackingField: {x: 131.20001, y: 233.59996}
+    <Position>k__BackingField: {x: 131.20001, y: 164.8}
   - <ID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
     <Name>k__BackingField: MainDialogue2
     <Position>k__BackingField: {x: 1247.1998, y: 241.59998}
@@ -24,35 +24,6 @@ MonoBehaviour:
     <Name>k__BackingField: FillerDialogue
     <Position>k__BackingField: {x: 1352.7999, y: 896}
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 2228243e-8367-48ed-9b92-e8b0e72f1246
-    <Name>k__BackingField: 1
-    <Text>k__BackingField: Correct Choice
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
-    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
-    <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 482.40002, y: 293.59998}
-  - <ID>k__BackingField: 9994cdc9-981b-4c77-9594-02f3bf173146
-    <Name>k__BackingField: 2
-    <Text>k__BackingField: '..... '
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
-    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
-    <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 482.40002, y: 514.39996}
-  - <ID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
-    <Name>k__BackingField: End
-    <Text>k__BackingField: 'End
-
-'
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 
-    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
-    <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 877.60004, y: 412}
   - <ID>k__BackingField: 6cd160aa-6fd1-43e0-a37e-b5e110dc38d1
     <Name>k__BackingField: 1
     <Text>k__BackingField: Multiple Choice
@@ -64,6 +35,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1606.3999, y: 301.59998}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: b4089872-1a5d-4681-90fb-d5be015c0389
     <Name>k__BackingField: 2
     <Text>k__BackingField: 1st choice
@@ -73,6 +47,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1953.6, y: 324}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: efb895e7-2b79-4943-9408-30da3cf3eb08
     <Name>k__BackingField: 3
     <Text>k__BackingField: Dialogue Text.
@@ -82,6 +59,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1953.6, y: 538.39996}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: dd39d6a1-faab-48c8-bcd2-e85cf217687f
     <Name>k__BackingField: End
     <Text>k__BackingField: End
@@ -91,15 +71,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 2261.5999, y: 443.19998}
-  - <ID>k__BackingField: d60f3813-5969-4048-b43a-08ae7ca86b00
-    <Name>k__BackingField: 0
-    <Text>k__BackingField: 'Start '
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 6cd160aa-6fd1-43e0-a37e-b5e110dc38d1
-    <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
-    <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 1272.7999, y: 324}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: 96d5504b-fa83-40d2-9a5b-f234ab5b7bd9
     <Name>k__BackingField: Start1
     <Text>k__BackingField: Start1
@@ -109,6 +83,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: f392e8cf-8013-4ea8-bde0-678488f4b930
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1378.3999, y: 956}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: 34c7a345-f2de-4531-9b91-165338b102d8
     <Name>k__BackingField: End1
     <Text>k__BackingField: End1
@@ -118,6 +95,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: f392e8cf-8013-4ea8-bde0-678488f4b930
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1693.6, y: 956}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: ce432132-4412-48a7-a196-8798e464644b
     <Name>k__BackingField: End2
     <Text>k__BackingField: End2
@@ -127,6 +107,9 @@ MonoBehaviour:
     <GroupID>k__BackingField: f392e8cf-8013-4ea8-bde0-678488f4b930
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1693.6, y: 1175.2001}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: abd95d49-1188-4054-9df6-2d3f3e6b9536
     <Name>k__BackingField: Start2
     <Text>k__BackingField: Start2
@@ -136,17 +119,78 @@ MonoBehaviour:
     <GroupID>k__BackingField: f392e8cf-8013-4ea8-bde0-678488f4b930
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 1378.3999, y: 1175.2001}
+    <AudioClipToPlay>k__BackingField: {fileID: 0}
+    <BotEmotion>k__BackingField: 0
+    <Speaker>k__BackingField: 0
   - <ID>k__BackingField: 17e9b71e-bbaf-463a-9a10-56e97cc1a81d
     <Name>k__BackingField: 0
-    <Text>k__BackingField: Bebis or Conke
+    <Text>k__BackingField: Bepis or coke?
     <Choices>k__BackingField:
-    - <Text>k__BackingField: Bebis
+    - <Text>k__BackingField: 111111111111111111111111111
       <NodeID>k__BackingField: 2228243e-8367-48ed-9b92-e8b0e72f1246
-    - <Text>k__BackingField: Conke
+    - <Text>k__BackingField: Coke
       <NodeID>k__BackingField: 9994cdc9-981b-4c77-9594-02f3bf173146
     <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 156.8, y: 293.59998}
+    <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+      type: 3}
+    <BotEmotion>k__BackingField: 2
+    <Speaker>k__BackingField: 1
+  - <ID>k__BackingField: d60f3813-5969-4048-b43a-08ae7ca86b00
+    <Name>k__BackingField: 0
+    <Text>k__BackingField: 'Start '
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 6cd160aa-6fd1-43e0-a37e-b5e110dc38d1
+    <GroupID>k__BackingField: b0b79c27-229a-4726-ac64-5ea7d8b601b8
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 1272.7999, y: 324}
+    <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+      type: 3}
+    <BotEmotion>k__BackingField: 1
+    <Speaker>k__BackingField: 1
+  - <ID>k__BackingField: 9994cdc9-981b-4c77-9594-02f3bf173146
+    <Name>k__BackingField: 2
+    <Text>k__BackingField: '..... '
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
+    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 482.40002, y: 514.39996}
+    <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+      type: 3}
+    <BotEmotion>k__BackingField: 5
+    <Speaker>k__BackingField: 0
+  - <ID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
+    <Name>k__BackingField: End
+    <Text>k__BackingField: 'End
+
+'
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 879.2, y: 420.8}
+    <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+      type: 3}
+    <BotEmotion>k__BackingField: 3
+    <Speaker>k__BackingField: 1
+  - <ID>k__BackingField: 2228243e-8367-48ed-9b92-e8b0e72f1246
+    <Name>k__BackingField: 1
+    <Text>k__BackingField: Correct Choice
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 9f6708ca-105b-4b66-aa1e-863f87335fb7
+    <GroupID>k__BackingField: 0ef06558-6117-4082-a35d-c3c725a0ab89
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 482.40002, y: 224.8}
+    <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+      type: 3}
+    <BotEmotion>k__BackingField: 6
+    <Speaker>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - MainDialogue1
   - MainDialogue2
@@ -154,12 +198,6 @@ MonoBehaviour:
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
-    - Key: MainDialogue1
-      Value:
-      - 1
-      - 2
-      - End
-      - 0
     - Key: MainDialogue2
       Value:
       - 1
@@ -173,3 +211,9 @@ MonoBehaviour:
       - End1
       - End2
       - Start2
+    - Key: MainDialogue1
+      Value:
+      - 0
+      - 2
+      - End
+      - 1

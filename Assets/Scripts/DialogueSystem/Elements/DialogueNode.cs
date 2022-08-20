@@ -131,11 +131,12 @@ public class DialogueNode : Node
             AudioClipToPlay = (AudioClip) callback.newValue;
             Debug.Log(AudioClipToPlay);
         });
+        audioClipField.value = AudioClipToPlay;
 
         textFoldoutOptions.Add(audioClipField);
         
         //Emotion Options
-        EnumField emotionEnumField = ElementUtility.CreateEnumField(BotEmotions.Neutral, "Emotion", callback =>
+        EnumField emotionEnumField = ElementUtility.CreateEnumField(BotEmotion, "Emotion", callback =>
         {
             BotEmotion = (BotEmotions)callback.newValue;
             Debug.Log(BotEmotion);
@@ -144,7 +145,7 @@ public class DialogueNode : Node
         textFoldoutOptions.Add(emotionEnumField);
         
         //Color Options
-        EnumField colorEnumField = ElementUtility.CreateEnumField(SpeakingColor.Bot, "Speaker", callback =>
+        EnumField colorEnumField = ElementUtility.CreateEnumField(Speaker, "Speaker", callback =>
         {
             Speaker = (SpeakingColor)callback.newValue;
             Debug.Log(Speaker);
@@ -153,6 +154,8 @@ public class DialogueNode : Node
         textFoldoutOptions.Add(colorEnumField);
         
         customDataContainer.Add(textFoldoutOptions);
+        
+        
 
         extensionContainer.Add(customDataContainer);
     }

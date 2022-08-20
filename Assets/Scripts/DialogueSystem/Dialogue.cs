@@ -30,6 +30,9 @@ public class Dialogue : MonoBehaviour
     private DialogueSO currentDialogue;
     private bool isTyping;
     private List<DialogueSO> multipleStartingNodes;
+    private AudioSource audioSource;
+    private Color playerColor = new Color(0.5f,1,0,1);
+    private Color botColor = new Color(0f, 0.5f, 1, 1);
     
     
     /// <summary>
@@ -40,6 +43,7 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         multipleStartingNodes = new List<DialogueSO>();
+        audioSource = GetComponent<AudioSource>();
         StartDialogue();
     }
 
@@ -52,6 +56,9 @@ public class Dialogue : MonoBehaviour
 
     private void DrawDialogue()
     {
+        SetupSettings();
+        
+        
         DisplayNextDialogueButtons(false);
         buttonPanel.SetActive(currentDialogue.DialogueType == DialogueType.MultipleChoice);
         if (buttonPanel.activeSelf)
@@ -65,6 +72,25 @@ public class Dialogue : MonoBehaviour
         }
 
         StartCoroutine(TypeText());
+    }
+
+    private void SetupSettings()
+    {
+        if (currentDialogue.AudioClipToPlay != null)
+        {
+            audioSource.PlayOneShot(currentDialogue.AudioClipToPlay);
+        }
+
+        Debug.Log(currentDialogue.Speaker);
+        if (currentDialogue.Speaker == SpeakingColor.Bot)
+        {
+            textUI.color = botColor;
+        }
+        else if (dialogue.Speaker == SpeakingColor.Player)
+        {
+            
+            textUI.color = playerColor;
+        }
     }
 
     public void OnChoiceButtonClicked(int index)

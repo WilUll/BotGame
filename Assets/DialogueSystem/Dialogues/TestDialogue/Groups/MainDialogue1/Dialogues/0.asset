@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: 0
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 0
-  <Text>k__BackingField: Bebis or Conke
+  <Text>k__BackingField: Bepis or coke?
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Bebis
+  - <Text>k__BackingField: 111111111111111111111111111
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 9d23d735f8f0cb34f8d15c1b5b62e023,
       type: 2}
-  - <Text>k__BackingField: Conke
+  - <Text>k__BackingField: Coke
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 47fa9f9ade56b6a469ce663a6fa592cd,
       type: 2}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
   <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
     type: 3}
-  <BotEmotion>k__BackingField: 0
-  <Speaker>k__BackingField: 0
+  <BotEmotion>k__BackingField: 2
+  <Speaker>k__BackingField: 1

@@ -138,6 +138,9 @@ public static class IOUtility
             node.ID = nodeData.ID;
             node.Choices = choice;
             node.Text = nodeData.Text;
+            node.Speaker = nodeData.Speaker;
+            node.BotEmotion = nodeData.BotEmotion;
+            node.AudioClipToPlay = nodeData.AudioClipToPlay;
             
             node.Draw();
             
@@ -317,7 +320,10 @@ public static class IOUtility
             Text = node.Text,
             GroupID = node.Group?.ID,
             DialogueType = node.DialogueType,
-            Position = node.GetPosition().position
+            Position = node.GetPosition().position,
+            AudioClipToPlay = node.AudioClipToPlay,
+            Speaker = node.Speaker,
+            BotEmotion = node.BotEmotion
         };
         
         graphData.Nodes.Add(nodeData);

@@ -21,6 +21,7 @@ MonoBehaviour:
     <NextDialogue>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
-  <AudioClipToPlay>k__BackingField: {fileID: 0}
-  <BotEmotion>k__BackingField: 0
-  <Speaker>k__BackingField: 0
+  <AudioClipToPlay>k__BackingField: {fileID: 8300000, guid: 34663b7e2c55f7a49920683a4d8d8fe3,
+    type: 3}
+  <BotEmotion>k__BackingField: 3
+  <Speaker>k__BackingField: 1
