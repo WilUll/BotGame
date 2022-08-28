@@ -8,7 +8,7 @@ using Debug = UnityEngine.Debug;
 
 public class PongPaddleMovement : MonoBehaviour
 {
-    public InputManager InputManager;
+    // public InputManager InputManager;
     public bool isAIControlled;
 
     private Rigidbody2D rb2d;
@@ -17,15 +17,15 @@ public class PongPaddleMovement : MonoBehaviour
     [HideInInspector] public GameObject Ball; 
     void Start()
     {
-        if (InputManager == null) isAIControlled = true;
+        // if (InputManager == null) isAIControlled = true;
     }
     
     void Update()
     {
         if (!isAIControlled)
         {
-            movement = new Vector2(InputManager.MoveInput.x,0) * speed;
-            Debug.Log(InputManager.MoveInput.x);
+            // movement = new Vector2(InputManager.MoveInput.x,0) * speed;
+            // Debug.Log(InputManager.MoveInput.x);
         }
         else
         {

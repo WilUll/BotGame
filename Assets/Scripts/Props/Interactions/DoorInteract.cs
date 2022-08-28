@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DoorInteract : MonoBehaviour, IInteractable
 {
-    private PlayerInteract playerInteractScript;
     public Quaternion OffsetRotAmount;
     private Quaternion startRot;
     private Quaternion endRot;
@@ -19,14 +18,12 @@ public class DoorInteract : MonoBehaviour, IInteractable
         endRot = startRot * OffsetRotAmount;
     }
 
-    public void Interact(PlayerInteract playerInteract)
+    public void Interact()
     {
         if (!isAnimating)
         {
             StartCoroutine(InteractAnim());
             isActive = !isActive;
-
-            playerInteractScript = playerInteract;
         }
     }
 

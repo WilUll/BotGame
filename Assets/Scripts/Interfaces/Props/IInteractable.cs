@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(PlayerInteract playerInteract);
+    void Interact();
 
     void EndInteract();
 }

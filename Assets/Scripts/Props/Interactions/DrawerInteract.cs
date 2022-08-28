@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class DrawerInteract : MonoBehaviour, IInteractable
 {
-    private PlayerInteract playerInteractScript;
     public Vector3 OffsetPosAmount;
     private Vector3 startPos;
     private Vector3 endPos;
@@ -21,14 +20,12 @@ public class DrawerInteract : MonoBehaviour, IInteractable
         endPos = startPos + OffsetPosAmount;
     }
 
-    public void Interact(PlayerInteract playerInteract)
+    public void Interact()
     {
         if (!isAnimating)
         {
             StartCoroutine(InteractAnim());
             isActive = !isActive;
-
-            playerInteractScript = playerInteract;
         }
     }
 
