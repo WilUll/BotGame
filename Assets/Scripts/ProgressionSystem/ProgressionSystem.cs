@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchInteract : MonoBehaviour
+public class ProgressionSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
